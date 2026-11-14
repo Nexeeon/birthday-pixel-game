@@ -1,49 +1,61 @@
-import React, { useState, useMemo } from 'react';
-import GameCanvas from './components/GameCanvas';
-import DialogBox from './components/DialogBox';
-import PuzzleModal from './components/PuzzleModal';
-import SkinWardrobe from './components/SkinWardrobe';
-import EndingCelebration from './components/EndingCelebration';
-import AudioController from './components/AudioController';
+import React, { useState, useMemo } from "react";
+import GameCanvas from "./components/GameCanvas";
+import DialogBox from "./components/DialogBox";
+import PuzzleModal from "./components/PuzzleModal";
+import SkinWardrobe from "./components/SkinWardrobe";
+import EndingCelebration from "./components/EndingCelebration";
+import AudioController from "./components/AudioController";
 
 // Assets for UI thumbnails & Puzzles
-import puzzle1Src from '../asset/puzzel1.jpeg';
-import puzzle2Src from '../asset/puzzel2.jpeg';
-import puzzle3Src from '../asset/puzzel3.jpeg';
+import puzzle1Src from "../asset/puzzel1.jpeg";
+import puzzle2Src from "../asset/puzzel2.jpeg";
+import puzzle3Src from "../asset/puzzel3.jpeg";
 
-import charUtamaSrc from '../asset/char_utama.jpg';
-import skin1Src from '../asset/hadiahpuzzel1.jpg';
-import skin2Src from '../asset/hadiahpuzzel2.jpg';
-import skin3Src from '../asset/hadiahpuzzel3.jpg';
+import charUtamaSrc from "../asset/char_utama.jpg";
+import skin1Src from "../asset/hadiahpuzzel1.jpg";
+import skin2Src from "../asset/hadiahpuzzel2.jpg";
+import skin3Src from "../asset/hadiahpuzzel3.jpg";
 
-import npc1Clean from './asset/sprites/npc1.png';
-import npc2Clean from './asset/sprites/npc2.png';
-import npc3Clean from './asset/sprites/npc3.png';
+import npc1Clean from "./asset/sprites/npc1.png";
+import npc2Clean from "./asset/sprites/npc2.png";
+import npc3Clean from "./asset/sprites/npc3.png";
 
 const PUZZLE_IMAGES = [puzzle1Src, puzzle2Src, puzzle3Src];
 
 const NPC_INFO = [
   {
-    name: 'Riri (Pemberi Hadiah 1)',
+    name: "Riri (Pemberi Hadiah 1)",
     thumbnailSrc: npc1Clean,
-    dialogText: 'Hai! Selamat datang di pesta ulang tahun! 🎉 Aku membawakan hadiah spesial untukmu. Selesaikan puzzle 6x6 dariku ya!',
+    dialogText:
+      "Hai! Selamat datang di pesta ulang tahun! 🎉 Aku membawakan hadiah spesial untukmu. Selesaikan puzzle 6x6 dariku ya!",
   },
   {
-    name: 'Dodi (Pemberi Hadiah 2)',
+    name: "Dodi (Pemberi Hadiah 2)",
     thumbnailSrc: npc2Clean,
-    dialogText: 'Wah, pestanya seru sekali! 🎂 Aku punya kado kostum adat keren untukmu. Ayo pecahkan teka-teki puzzle kedua ini!',
+    dialogText:
+      "Wah, pestanya seru sekali! 🎂 Aku punya kado kostum adat keren untukmu. Ayo pecahkan teka-teki puzzle kedua ini!",
   },
   {
-    name: 'Lala (Pemberi Hadiah 3)',
+    name: "Lala (Pemberi Hadiah 3)",
     thumbnailSrc: npc3Clean,
-    dialogText: 'Halo sahabat! 🌟 Satu kado terakhir menantimu. Selesaikan puzzle 6x6 ini untuk melengkapi pesta ulang tahunmu!',
+    dialogText:
+      "Halo sahabat! 🌟 Satu kado terakhir menantimu. Selesaikan puzzle 6x6 ini untuk melengkapi pesta ulang tahunmu!",
   },
 ];
 
 export default function App() {
   const [activeSkinId, setActiveSkinId] = useState(0);
-  const [completedMissions, setCompletedMissions] = useState([false, false, false]);
-  const [unlockedSkins, setUnlockedSkins] = useState([true, false, false, false]);
+  const [completedMissions, setCompletedMissions] = useState([
+    false,
+    false,
+    false,
+  ]);
+  const [unlockedSkins, setUnlockedSkins] = useState([
+    true,
+    false,
+    false,
+    false,
+  ]);
 
   const [dialogNpcIndex, setDialogNpcIndex] = useState(null);
   const [puzzleNpcIndex, setPuzzleNpcIndex] = useState(null);
@@ -52,36 +64,39 @@ export default function App() {
   const [isCutsceneVideoPlaying, setIsCutsceneVideoPlaying] = useState(false);
 
   // Skins Configuration
-  const skins = useMemo(() => [
-    {
-      id: 0,
-      name: 'Utama (Default)',
-      unlocked: unlockedSkins[0],
-      thumbnailSrc: charUtamaSrc,
-      unlockHint: 'Kostum Utama',
-    },
-    {
-      id: 1,
-      name: 'Peace Sign (NPC 1)',
-      unlocked: unlockedSkins[1],
-      thumbnailSrc: skin1Src,
-      unlockHint: 'Selesaikan Puzzle Riri',
-    },
-    {
-      id: 2,
-      name: 'Bucket Pink (NPC 2)',
-      unlocked: unlockedSkins[2],
-      thumbnailSrc: skin2Src,
-      unlockHint: 'Selesaikan Puzzle Dodi',
-    },
-    {
-      id: 3,
-      name: 'Blus Biru (NPC 3)',
-      unlocked: unlockedSkins[3],
-      thumbnailSrc: skin3Src,
-      unlockHint: 'Selesaikan Puzzle Lala',
-    },
-  ], [unlockedSkins]);
+  const skins = useMemo(
+    () => [
+      {
+        id: 0,
+        name: "Utama (Default)",
+        unlocked: unlockedSkins[0],
+        thumbnailSrc: charUtamaSrc,
+        unlockHint: "Kostum Utama",
+      },
+      {
+        id: 1,
+        name: "Peace Sign (NPC 1)",
+        unlocked: unlockedSkins[1],
+        thumbnailSrc: skin1Src,
+        unlockHint: "Selesaikan Puzzle Riri",
+      },
+      {
+        id: 2,
+        name: "Bucket Pink (NPC 2)",
+        unlocked: unlockedSkins[2],
+        thumbnailSrc: skin2Src,
+        unlockHint: "Selesaikan Puzzle Dodi",
+      },
+      {
+        id: 3,
+        name: "Blus Biru (NPC 3)",
+        unlocked: unlockedSkins[3],
+        thumbnailSrc: skin3Src,
+        unlockHint: "Selesaikan Puzzle Lala",
+      },
+    ],
+    [unlockedSkins],
+  );
 
   const completedCount = completedMissions.filter(Boolean).length;
 
@@ -136,10 +151,14 @@ export default function App() {
     setShowEndingCelebration(false);
   };
 
-  const isModalOpen = dialogNpcIndex !== null || puzzleNpcIndex !== null || isWardrobeOpen || showEndingCelebration;
+  const isModalOpen =
+    dialogNpcIndex !== null ||
+    puzzleNpcIndex !== null ||
+    isWardrobeOpen ||
+    showEndingCelebration;
 
   return (
-    <div className="relative w-screen h-screen overflow-hidden bg-black select-none">
+    <div className="relative w-screen h-[100dvh] overflow-hidden bg-black select-none">
       {/* Top HUD */}
       <div className="absolute top-3 left-3 right-3 z-30 flex items-center justify-between pointer-events-none font-pixel">
         {/* Mission Progress */}
@@ -150,7 +169,10 @@ export default function App() {
               MISI ULANG TAHUN
             </div>
             <div className="text-[10px] sm:text-xs text-white">
-              Hadiah: <span className="text-amber-400 font-bold">{completedCount}/3</span>
+              Hadiah:{" "}
+              <span className="text-amber-400 font-bold">
+                {completedCount}/3
+              </span>
             </div>
           </div>
         </div>
@@ -194,7 +216,9 @@ export default function App() {
       <DialogBox
         isOpen={dialogNpcIndex !== null}
         npc={dialogNpcIndex !== null ? NPC_INFO[dialogNpcIndex] : null}
-        isMissionCompleted={dialogNpcIndex !== null ? completedMissions[dialogNpcIndex] : false}
+        isMissionCompleted={
+          dialogNpcIndex !== null ? completedMissions[dialogNpcIndex] : false
+        }
         onStartPuzzle={handleStartPuzzle}
         onClose={() => setDialogNpcIndex(null)}
       />
@@ -203,7 +227,9 @@ export default function App() {
       <PuzzleModal
         isOpen={puzzleNpcIndex !== null}
         npcIndex={puzzleNpcIndex !== null ? puzzleNpcIndex : 0}
-        puzzleImageSrc={puzzleNpcIndex !== null ? PUZZLE_IMAGES[puzzleNpcIndex] : null}
+        puzzleImageSrc={
+          puzzleNpcIndex !== null ? PUZZLE_IMAGES[puzzleNpcIndex] : null
+        }
         onClose={() => setPuzzleNpcIndex(null)}
         onComplete={handlePuzzleComplete}
       />
@@ -233,4 +259,3 @@ export default function App() {
     </div>
   );
 }
-
